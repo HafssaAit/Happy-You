@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Book your call – Happy You</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@800&family=DM+Sans:wght@400;500&display=swap">
+<style>
+:root{--bg:#f5f8fa;--ink:#14213d;--muted:#52607a;--sun:#ffc83d;--teal:#1f8a82;--card:#fff;--line:#d9e1e8}
+@media (prefers-color-scheme:dark){:root{--bg:#0f1829;--ink:#eef2f7;--muted:#a3b0c4;--card:#182338;--line:#2a3955}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 "DM Sans",system-ui,sans-serif}
+h1{font:800 clamp(2rem,5vw,3rem)/1.1 "Bricolage Grotesque",system-ui,sans-serif;margin:0 0 12px}
+.wrap{max-width:620px;margin:0 auto;padding:40px 20px}
+.logo{display:inline-flex;align-items:center;text-decoration:none}
+.wordmark{display:block;width:min(220px,70vw);height:auto}
+p{color:var(--muted)}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px;margin-top:24px}
+label{display:block;font-weight:500;margin:12px 0 4px}
+input,select,textarea{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:8px;font:inherit;background:var(--bg);color:var(--ink)}
+.btn{margin-top:18px;width:100%;border:0;border-radius:10px;padding:13px;background:var(--ink);color:var(--bg);font:600 1rem inherit;font-family:inherit;cursor:pointer}
+.btn:hover{background:var(--teal);color:#fff}
+:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
+#msg{margin-top:14px;padding:12px;border-radius:8px;display:none}
+#msg.ok{display:block;background:#dff3ef;color:#0e4f49}
+#msg.err{display:block;background:#fde4e1;color:#7a1d12}
+@media(max-width:600px){
+  .wrap{padding:32px 18px 48px}
+  h1{margin-top:24px}
+  .panel{padding:20px;border-radius:12px;margin-top:28px}
+  label{margin-top:16px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="logo" href="index.html"><img class="wordmark" src="logo-wordmark.svg" alt="Happy You - Professionals meet people looking for work"></a>
+  <h1 style="margin-top:32px">Book your call</h1>
+  <p>Thanks for your interest. Choose a time for a short 15-minute call. We’ll talk about what you’re looking for and which introductions could help. There’s no obligation.</p>
+
+  <!-- OPTION A: paste your Calendly (or similar) link here, then delete the form below -->
+  <!-- <iframe src="https://calendly.com/YOUR-LINK" width="100%" height="650" style="border:0;margin-top:24px" title="Booking calendar"></iframe> -->
+
+  <!-- OPTION B: simple request form -->
+  <div class="panel">
+    <form id="b" novalidate>
+      <label for="name">Full name</label><input id="name" name="name" autocomplete="name" required>
+      <label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email" required>
+      <label for="date">Preferred date</label><input id="date" name="date" type="date" required>
+      <label for="time">Preferred time</label>
+      <select id="time" name="time"><option>Morning (9:00–12:00)</option><option>Afternoon (13:00–17:00)</option><option>Evening (17:00–19:00)</option></select>
+      <label for="phone">Phone number (optional, only if you want a call instead of a video link)</label>
+      <input id="phone" name="phone" type="tel" autocomplete="tel">
+      <label for="note">Anything you’d like us to know?</label><textarea id="note" name="note" rows="3"></textarea>
+      <button class="btn" type="submit">Request this time</button>
+      <p style="font-size:.85rem;margin:12px 0 0">By sending this request you agree to our <a href="privacy.html" style="color:var(--teal)">privacy policy</a>.</p>
+      <div id="msg" role="status"></div>
+    </form>
+  </div>
+</div>
+<script>
+// ---- SETTINGS: change this to your form service ----
+const FORM_ENDPOINT = "https://formspree.io/f/moeernlz";
+const msg=document.getElementById("msg"), d=document.getElementById("date");
+d.min=new Date().toISOString().slice(0,10);
+document.getElementById("b").addEventListener("submit",async e=>{
+  e.preventDefault();
+  const f=e.target, show=(c,t)=>{msg.className=c;msg.textContent=t};
+  if(!f.name.value.trim()||!/^\S+@\S+\.\S+$/.test(f.email.value)||!f.date.value) return show("err","Enter your name, a valid email, and a date.");
+  try{
+    const r=await fetch(FORM_ENDPOINT,{method:"POST",headers:{"Content-Type":"application/json",Accept:"application/json"},
+      body:JSON.stringify({type:"booking",name:f.name.value,email:f.email.value,date:f.date.value,time:f.time.value,phone:f.phone.value,note:f.note.value})});
+    if(!r.ok) throw 0;
+    f.reset(); show("ok","Request received. We’ll confirm your time by email.");
+  }catch{ show("err","We couldn’t send your request. Try again in a moment."); }
+});
+</script>
+</body>
+</html>

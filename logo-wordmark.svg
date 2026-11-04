@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 92" role="img" aria-labelledby="title desc">
+  <title id="title">Happy You</title>
+  <desc id="desc">Happy You wordmark</desc>
+  <circle cx="42" cy="46" r="30" fill="#ffc83d"/>
+  <path d="M28 47c5 7 11 10 18 10s13-3 18-10" fill="none" stroke="#14213d" stroke-linecap="round" stroke-width="5"/>
+  <circle cx="32" cy="37" r="3.5" fill="#14213d"/>
+  <circle cx="56" cy="37" r="3.5" fill="#14213d"/>
+  <text x="88" y="61" fill="#14213d" font-family="Bricolage Grotesque, sans-serif" font-size="52" font-weight="800">Happy You</text>
+</svg>
