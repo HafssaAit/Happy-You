@@ -5,5 +5,11 @@
   <path d="M28 47c5 7 11 10 18 10s13-3 18-10" fill="none" stroke="#14213d" stroke-linecap="round" stroke-width="5"/>
   <circle cx="32" cy="37" r="3.5" fill="#14213d"/>
   <circle cx="56" cy="37" r="3.5" fill="#14213d"/>
-  <text x="88" y="61" fill="#14213d" font-family="Bricolage Grotesque, sans-serif" font-size="52" font-weight="800">Happy You</text>
+  <style>
+    .wordmark-text { fill: #14213d; }
+    @media (prefers-color-scheme: dark) {
+      .wordmark-text { fill: #eef2f7; }
+    }
+  </style>
+  <text class="wordmark-text" x="88" y="61" font-family="Bricolage Grotesque, sans-serif" font-size="52" font-weight="800">Happy You</text>
 </svg>
